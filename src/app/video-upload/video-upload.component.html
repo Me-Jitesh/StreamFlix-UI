@@ -1,0 +1,47 @@
+<div class="text-slate-100">
+    <div class="flex justify-center py-8 bg-indigo-400">
+      <h1 class="font-bold text-6xl text-center text-zinc-800">
+        Welcome To <span class="text-violet-950">Stream</span><span class="text-orange-500">Flix</span>
+      </h1>
+    </div>
+  
+    <div class="flex flex-col items-center justify-center space-y-2 py-6">
+      <form (ngSubmit)="onSubmit()">
+        <div>
+          <input type="text" name="title" [(ngModel)]="title" placeholder="Enter Title For Video" required />
+        </div>
+  
+        <div>
+          <textarea name="desc" [(ngModel)]="description" placeholder="Write Description" rows="3" required></textarea>
+        </div>
+  
+        <div class="flex items-center space-x-2">
+          <label class="block">
+            <span class="sr-only">Upload Video</span>
+            <input type="file" name="file" (change)="onFileChange($event)" required />
+          </label>
+        </div>
+  
+        <div class="flex items-center space-x-2">
+          <label class="block">
+            <span class="sr-only">Upload Thumbnail</span>
+            <input type="file" name="thumb" (change)="onImgChange($event)" required />
+          </label>
+        </div>
+  
+        <div *ngIf="uploading">
+          <progress [value]="progress" max="100"></progress>
+          <span>Uploading...</span>
+        </div>
+  
+        <div *ngIf="message">
+          <div class="alert alert-success">{{ message }}</div>
+        </div>
+  
+        <div class="flex justify-center my-3">
+          <button type="submit" [disabled]="uploading" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
