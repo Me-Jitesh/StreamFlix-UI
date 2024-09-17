@@ -41,11 +41,10 @@ export class VideoUploadComponent {
   handleForm() {
     if (!this.selectedFile || !this.selectedImg) {
 
-      this.toastr.error('Select Video and Thumbnail', '', {
-        positionClass: 'toast-bottom-center'
+      this.toastr.error('Must Select Video and Thumbnail ! ', '', {
+        positionClass: 'toast-top-center'
       });
 
-      alert('Must Select Video and Thumbnail!');
       return;
     }
     this.submitToServer(this.selectedFile, this.selectedImg, this.videoForm.value);
