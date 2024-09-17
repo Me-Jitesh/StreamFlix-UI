@@ -40,6 +40,11 @@ export class VideoUploadComponent {
 
   handleForm() {
     if (!this.selectedFile || !this.selectedImg) {
+
+      this.toastr.error('Select Video and Thumbnail', '', {
+        positionClass: 'toast-bottom-center'
+      });
+
       alert('Must Select Video and Thumbnail!');
       return;
     }
@@ -72,13 +77,19 @@ export class VideoUploadComponent {
         } else if (event.type === HttpEventType.Response) {
           this.resetForm();
           this.message = 'File Uploaded Successfully!';
-          this.toastr.success('Hurrey! File Uploading Done');
+          this.toastr.success('Hurrey! File Uploading Done', '', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center',
+          });
         }
       },
       error: (err) => {
         this.resetForm();
         this.message = 'Oops... Uploading Failed!';
-        this.toastr.error('Bad Luck!');
+        this.toastr.error('Bad Luck!', '', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center',
+        });
         console.error(err);
       }
     });
