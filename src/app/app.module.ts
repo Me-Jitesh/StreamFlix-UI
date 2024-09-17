@@ -11,11 +11,6 @@ import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
-const routes: Routes = [
-  { path: 'upload', component: VideoUploadComponent },
-  { path: '', redirectTo: '/upload', pathMatch: 'full' }
-];
-
 @NgModule({
   declarations: [
     AppComponent,

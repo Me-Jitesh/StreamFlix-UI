@@ -4,9 +4,9 @@ import { VideoUploadComponent } from './video-upload/video-upload.component';
 import { HomeFeedComponent } from './home-feed/home-feed.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/video-upload', pathMatch: 'full' },
-  { path: 'video-upload', component: VideoUploadComponent },
-  { path: 'home-feed', component: HomeFeedComponent },
+  { path: '', redirectTo: '/upload', pathMatch: 'full' },
+  { path: 'upload', component: VideoUploadComponent },
+  { path: 'feed', component: HomeFeedComponent },
 ];
 
 @NgModule({
