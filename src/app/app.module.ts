@@ -10,12 +10,14 @@ import { VideoUploadComponent } from './video-upload/video-upload.component';
 import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VideoUploadComponent,
-    HomeFeedComponent
+    HomeFeedComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
