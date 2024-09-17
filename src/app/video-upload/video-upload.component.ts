@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpEventType } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-video-upload',
@@ -12,69 +11,76 @@ import { ToastrService } from 'ngx-toastr';
 export class VideoUploadComponent {
   selectedFile: File | null = null;
   selectedImg: File | null = null;
-  title: string = '';
-  description: string = '';
   progress: number = 0;
   uploading: boolean = false;
   message: string = '';
+  vidId: string = "694543b0-7a1b-4bb5-9d2d-59c0624b0a2c";
+  videoForm: FormGroup;
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private fb: FormBuilder
+  ) {
+    this.videoForm = this.fb.group({
+      title: ['', Validators.required],
+      desc: ['', Validators.required],
+      file: [null, Validators.required],
+      thumb: [null, Validators.required]
+    });
+  }
 
-  onFileChange(event: any) {
+  handleFileChange(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
-  onImgChange(event: any) {
+  handleImgChange(event: any) {
     this.selectedImg = event.target.files[0];
   }
 
-  onSubmit() {
+  handleForm() {
     if (!this.selectedFile || !this.selectedImg) {
-      alert('Must Select Video File!');
+      alert('Must Select Video and Thumbnail!');
       return;
     }
-
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    formData.append('thumb', this.selectedImg);
-    formData.append('title', this.title);
-    formData.append('desc', this.description);
-
-    this.uploading = true;
-    this.http.post('https://streamflix.koyeb.app/api/v1/videos', formData, {
-      reportProgress: true,
-      observe: 'events'
-    }).pipe(
-      map(event => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            if (event.total) {
-              this.progress = Math.round((100 * event.loaded) / event.total);
-            }
-            break;
-          case HttpEventType.Response:
-            this.uploading = false;
-            this.message = 'File Uploaded Successfully!';
-            this.toastr.success('Hooray! File Uploading Done');
-            this.resetForm();
-            break;
-        }
-      }),
-      catchError(error => {
-        this.uploading = false;
-        this.message = 'Oops... Uploading Failed!';
-        this.toastr.error('Bad Luck!');
-        console.error(error);
-        return of(null);
-      })
-    ).subscribe();
+    this.submitToServer(this.selectedFile, this.selectedImg, this.videoForm.value);
   }
 
   resetForm() {
-    this.title = '';
-    this.description = '';
+    this.videoForm.reset();
+    this.uploading = false;
+    this.progress = 0;
     this.selectedFile = null;
     this.selectedImg = null;
-    this.progress = 0;
+  }
+
+  submitToServer(video: File, image: File, videoMeta: any) {
+    this.uploading = true;
+    const formData = new FormData();
+    formData.append('file', video);
+    formData.append('thumb', image);
+    formData.append('title', videoMeta.title);
+    formData.append('desc', videoMeta.desc);
+
+    this.http.post('https://streamflix.koyeb.app/api/v1/videos', formData, {
+      reportProgress: true,
+      observe: 'events',
+    }).subscribe({
+      next: (event: HttpEvent<any>) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * (event.loaded / (event.total || 1)));
+        } else if (event.type === HttpEventType.Response) {
+          this.resetForm();
+          this.message = 'File Uploaded Successfully!';
+          this.toastr.success('Hurrey! File Uploading Done');
+        }
+      },
+      error: (err) => {
+        this.resetForm();
+        this.message = 'Oops... Uploading Failed!';
+        this.toastr.error('Bad Luck!');
+        console.error(err);
+      }
+    });
   }
 }
