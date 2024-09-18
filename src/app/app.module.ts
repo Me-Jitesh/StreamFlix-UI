@@ -12,6 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
+import { VideoCardComponent } from './video-card/video-card.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
     VideoUploadComponent,
     HomeFeedComponent,
     NavbarComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    VideoCardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,13 @@
+<div class="max-w-sm bg-slate-950 border border-gray-500 rounded-md shadow-md">
+    <app-video-player [src]="'https://streamflix.koyeb.app/api/v1/videos/stream/' + video.videoId + '/master.m3u8'"
+        [poster]="'https://streamflix.koyeb.app/api/v1/videos/stream/thumb/' + video.videoId"></app-video-player>
+
+    <div class="p-5">
+        <h5 class="text-2xl font-semibold tracking-tight text-slate-600">{{ video.title }}</h5>
+        <p class="text-slate-300 text-sm mt-2"> &#x22B9; {{ video.description }}</p>
+
+        <button class="btn btn-gradient-duotone teal-to-lime outline pill my-4" (click)="onDelete.emit(video.videoId)">
+            Delete
+        </button>
+    </div>
+</div>
