@@ -11,13 +11,15 @@ import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { VideoPlayerComponent } from './video-player/video-player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VideoUploadComponent,
     HomeFeedComponent,
-    NavbarComponent
+    NavbarComponent,
+    VideoPlayerComponent
   ],
   imports: [
     BrowserModule,
