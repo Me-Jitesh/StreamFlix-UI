@@ -1,5 +1,5 @@
 <div class="app" *ngIf="!loading; else loadingSpinner">
-    <div class="video-feed grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="video-feed grid grid-cols-2 md:grid-cols-4 gap-6">
         <app-video-card *ngFor="let video of videos" [video]="video"
             (onDelete)="handleDelete(video.videoId)"></app-video-card>
     </div>
