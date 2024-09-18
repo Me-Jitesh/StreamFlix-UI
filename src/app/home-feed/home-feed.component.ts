@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-feed',
@@ -9,9 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HomeFeedComponent implements OnInit {
   videos: any[] = [];
-  loading: boolean = true;
+  loading = true;
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.fetchVideos();
@@ -21,13 +20,11 @@ export class HomeFeedComponent implements OnInit {
     this.http.get('https://streamflix.koyeb.app/api/v1/videos/stream').subscribe({
       next: (data: any) => {
         this.videos = data;
-        this.loading = false;
       },
       error: (error) => {
         console.error('Error fetching videos:', error);
-        this.toastr.error('Error fetching videos', '', {
-          positionClass: 'toast-top-center'
-        });
+      },
+      complete: () => {
         this.loading = false;
       }
     });
@@ -37,15 +34,9 @@ export class HomeFeedComponent implements OnInit {
     this.http.get(`https://streamflix.koyeb.app/api/v1/videos/stream/delete/${id}`).subscribe({
       next: () => {
         this.videos = this.videos.filter(video => video.videoId !== id);
-        this.toastr.success('Video deleted successfully', '', {
-          positionClass: 'toast-top-center'
-        });
       },
       error: (error) => {
         console.error('Error deleting video:', error);
-        this.toastr.error('Error deleting video', '', {
-          positionClass: 'toast-top-center'
-        });
       }
     });
   }
