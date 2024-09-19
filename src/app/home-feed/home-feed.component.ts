@@ -23,7 +23,7 @@ export class HomeFeedComponent implements OnInit {
         this.videos = data;
       },
       error: (error) => {
-        this.loading = false;
+        // this.loading = false;
         console.error('Error fetching videos:', error);
         this.toastr.info('', ' Please! Refresh', {
           positionClass: 'toast-top-center'

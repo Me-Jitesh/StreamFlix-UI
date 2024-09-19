@@ -14,7 +14,6 @@ export class VideoUploadComponent {
   progress: number = 0;
   uploading: boolean = false;
   message: string = '';
-  vidId: string = "694543b0-7a1b-4bb5-9d2d-59c0624b0a2c";
   videoForm: FormGroup;
 
   constructor(

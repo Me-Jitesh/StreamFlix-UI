@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { VideoUploadComponent } from './video-upload/video-upload.component';
 import { HomeFeedComponent } from './home-feed/home-feed.component';
-import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
