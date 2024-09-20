@@ -37,17 +37,49 @@ export class VideoUploadComponent {
     this.selectedImg = event.target.files[0];
   }
 
-  handleForm() {
-    if (!this.selectedFile || !this.selectedImg) {
+  dismissMessage() {
+    this.message = ''; // Clear the message
+  }
 
-      this.toastr.error('Must Select Video and Thumbnail ! ', '', {
+
+  handleForm() {
+
+    // Check if title is valid
+    if (!this.videoForm.get('title')?.value) {
+      this.toastr.warning('Title is required !', '', {
         positionClass: 'toast-top-center'
       });
-
       return;
     }
+
+    // Check if description is valid
+    if (!this.videoForm.get('desc')?.value) {
+      this.toastr.info('Description is required !', '', {
+        positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
+    // Validate selected video file
+    if (!this.selectedFile || this.selectedFile.type.split('/')[0] !== 'video') {
+      this.toastr.error('Invalid video file !', '', {
+        positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
+    // Validate selected thumbnail image
+    if (!this.selectedImg || this.selectedImg.type.split('/')[0] !== 'image') {
+      this.toastr.warning('Invalid image file !', '', {
+        positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
+    // Proceed to submit if all validations pass
     this.submitToServer(this.selectedFile, this.selectedImg, this.videoForm.value);
   }
+
 
   resetForm() {
     this.videoForm.reset();
@@ -55,6 +87,12 @@ export class VideoUploadComponent {
     this.progress = 0;
     this.selectedFile = null;
     this.selectedImg = null;
+    // Clear the file input values manually
+    const fileInput = document.querySelector('input[type="file"][name="file"]') as HTMLInputElement;
+    const imgInput = document.querySelector('input[type="file"][name="thumb"]') as HTMLInputElement;
+
+    if (fileInput) fileInput.value = ''; // Clear the video file input
+    if (imgInput) imgInput.value = ''; // Clear the image thumbnail input
   }
 
   submitToServer(video: File, image: File, videoMeta: any) {
