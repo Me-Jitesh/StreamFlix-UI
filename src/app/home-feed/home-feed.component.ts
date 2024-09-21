@@ -18,7 +18,7 @@ export class HomeFeedComponent implements OnInit {
   }
 
   fetchVideos() {
-    this.http.get('https://streamflix.koyeb.app/api/v1/videos/stream').subscribe({
+    this.http.get('https://streamflix-unhp.onrender.com/api/v1/videos/stream').subscribe({
       next: (data: any) => {
         this.videos = data;
       },
@@ -36,7 +36,7 @@ export class HomeFeedComponent implements OnInit {
   }
 
   handleDelete(id: string) {
-    this.http.get(`https://streamflix.koyeb.app/api/v1/videos/stream/delete/${id}`).subscribe({
+    this.http.get(`https://streamflix-unhp.onrender.com/api/v1/videos/stream/delete/${id}`).subscribe({
       next: () => {
         this.videos = this.videos.filter(video => video.videoId !== id);
         this.toastr.success('Video deleted successfully', '', {

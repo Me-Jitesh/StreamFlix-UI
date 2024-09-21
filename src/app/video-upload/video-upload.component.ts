@@ -136,7 +136,7 @@ export class VideoUploadComponent implements OnInit {
     formData.append('title', videoMeta.title);
     formData.append('desc', videoMeta.desc);
 
-    this.http.post('https://streamflix.koyeb.app/api/v1/videos', formData, {
+    this.http.post('https://streamflix-unhp.onrender.com/api/v1/videos', formData, {
       reportProgress: true,
       observe: 'events',
     }).subscribe({
