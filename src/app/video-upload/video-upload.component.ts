@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './video-upload.component.html',
   styleUrls: ['./video-upload.component.css']
 })
-export class VideoUploadComponent {
+export class VideoUploadComponent implements OnInit {
   selectedFile: File | null = null;
   selectedImg: File | null = null;
   progress: number = 0;
@@ -27,6 +27,21 @@ export class VideoUploadComponent {
       file: [null, Validators.required],
       thumb: [null, Validators.required]
     });
+  }
+  ngOnInit(): void {
+
+    // Visitor IP Storage
+
+    const visitorIP = sessionStorage.getItem('visitorIP');
+
+    if (!visitorIP) {
+      this.http.get("https://streamflix.koyeb.app/api/v1/visitor/save", { responseType: 'text' }).subscribe((responseMsg) => {
+        sessionStorage.setItem('visitorIP', responseMsg);
+        console.log("Visitor IP : " + responseMsg);
+      });
+    } else {
+      console.log("Visitor Exists With IP : " + sessionStorage.getItem('visitorIP'));
+    }
   }
 
   handleFileChange(event: any) {
