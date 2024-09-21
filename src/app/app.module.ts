@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { VideoCardComponent } from './video-card/video-card.component';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { VideoCardComponent } from './video-card/video-card.component';
     ToastrModule.forRoot(),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

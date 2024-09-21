@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-video-upload',
@@ -18,6 +19,7 @@ export class VideoUploadComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    private cookieService: CookieService,
     private toastr: ToastrService,
     private fb: FormBuilder
   ) {
@@ -28,10 +30,13 @@ export class VideoUploadComponent implements OnInit {
       thumb: [null, Validators.required]
     });
   }
+
   ngOnInit(): void {
+    // this.visitorPersistentBySession();
+    this.visitorPersistentByCookie();
+  }
 
-    // Visitor IP Storage
-
+  visitorPersistentBySession() {
     const visitorIP = sessionStorage.getItem('visitorIP');
 
     if (!visitorIP) {
@@ -40,7 +45,20 @@ export class VideoUploadComponent implements OnInit {
         console.log("Visitor IP : " + responseMsg);
       });
     } else {
-      console.log("Visitor Exists With IP : " + sessionStorage.getItem('visitorIP'));
+      console.log("Visitor Exists With IP : " + visitorIP);
+    }
+  }
+
+  visitorPersistentByCookie() {
+    const visitorIP = this.cookieService.get('visitorIP');
+
+    if (!visitorIP) {
+      this.http.get("https://streamflix.koyeb.app/api/v1/visitor/save", { responseType: 'text' }).subscribe((responseMsg) => {
+        this.cookieService.set('visitorIP', responseMsg, 10); // 10-day expiry
+        console.log("Visitor IP : " + responseMsg);
+      });
+    } else {
+      console.log("Visitor Exists With IP : " + visitorIP);
     }
   }
 
