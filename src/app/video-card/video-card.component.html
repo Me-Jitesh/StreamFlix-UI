@@ -1,13 +1,14 @@
-<div class="max-w-sm bg-slate-950 border border-gray-500 rounded-md shadow-md">
+<div class="bg-slate-950 border border-gray-500 rounded-md shadow-md">
     <app-video-player [src]="'https://streamflix-unhp.onrender.com/api/v1/videos/stream/range/' + video.videoId"
-        [poster]="'https://streamflix-unhp.onrender.com/api/v1/videos/stream/thumb/' + video.videoId">
+        [poster]="'https://streamflix-unhp.onrender.com/api/v1/videos/stream/thumb/' + video.videoId"
+        class="flex justify-center m-2">
     </app-video-player>
 
     <div class="p-5">
 
-        <h5 class="text-2xl font-semibold tracking-tight text-slate-600">{{ video.title }}</h5>
+        <h5 class="text-xl font-semibold tracking-tight text-slate-600">{{ video.title }}</h5>
 
-        <p class="text-slate-300 text-sm mt-2"> &#x22B9; {{ video.description }}</p>
+        <p class="text-slate-300 text-xs text-balance mt-2"> &#x22B9; {{ video.description }}</p>
 
         <button (click)="onDelete.emit(video.videoId)" class="mt-4 text-white bg-rose-950 hover:bg-rose-900 
             focus:outline-none focus:ring-4 focus:ring-white font-medium 
