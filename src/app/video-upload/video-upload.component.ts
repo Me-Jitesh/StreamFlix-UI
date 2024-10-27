@@ -40,7 +40,7 @@ export class VideoUploadComponent implements OnInit {
     const visitorIP = sessionStorage.getItem('visitorIP');
 
     if (!visitorIP) {
-      this.http.get("https://streamflix.koyeb.app/api/v1/visitor/save", { responseType: 'text' }).subscribe((responseMsg) => {
+      this.http.get("https://streamflix-unhp.onrender.com/api/v1/visitor/save", { responseType: 'text' }).subscribe((responseMsg) => {
         sessionStorage.setItem('visitorIP', responseMsg);
         console.log("Visitor IP : " + responseMsg);
       });
@@ -53,7 +53,7 @@ export class VideoUploadComponent implements OnInit {
     const visitorIP = this.cookieService.get('visitorIP');
 
     if (!visitorIP) {
-      this.http.get("https://streamflix.koyeb.app/api/v1/visitor/save", { responseType: 'text' }).subscribe((responseMsg) => {
+      this.http.get("https://streamflix-unhp.onrender.com/api/v1/visitor/save", { responseType: 'text' }).subscribe((responseMsg) => {
         this.cookieService.set('visitorIP', responseMsg, 10); // 10-day expiry
         console.log("Visitor IP : " + responseMsg);
       });
